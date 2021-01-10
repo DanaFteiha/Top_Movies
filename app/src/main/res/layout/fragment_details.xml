@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.Fragments.DetailsFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="4dp">
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:adjustViewBounds="true"
+                tools:layout_height="300dp"
+                tools:scaleType="centerCrop"
+                tools:src="@drawable/ic_launcher_background"></ImageView>
+
+            <TextView
+                android:id="@+id/text_view_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="This is movie Title"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="visible"></TextView>
+
+            <TextView
+                android:id="@+id/text_view_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="This is the description"
+                android:visibility="gone"
+                tools:visibility="visible"></TextView>
+
+            <TextView
+                android:id="@+id/text_view_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="This is the rating"
+                android:textColor="@android:color/black"
+                android:visibility="gone"
+                tools:visibility="visible"></TextView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"></ProgressBar>
+
+</FrameLayout>
