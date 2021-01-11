@@ -18,24 +18,25 @@ import com.example.topmovies.Resource
 import com.example.topmovies.Room.MovieDataBase
 import com.example.topmovies.api.Api
 import com.example.topmovies.data.Movie
-import com.example.topmovies.data.Repository
-import com.example.topmovies.dependencyInjection.DaggerMainComponent
-import com.example.topmovies.ui.MainViewModel
+import com.example.topmovies.di.AppModule
+import com.example.topmovies.di.DaggerMainComponent
+import com.example.topmovies.di.MainModule
+import com.example.topmovies.ui.MovieViewModel
 import com.example.topmovies.ui.MovieAdapter
-import dagger.Module
 import kotlinx.android.synthetic.main.fragment_movies.*
 import javax.inject.Inject
 
 
 class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemClickListener {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: MovieAdapter
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: MovieViewModel
     private lateinit var moviesApi: Api
-    private lateinit var db : MovieDataBase
-    val TAG ="Movies Fragment"
+    private lateinit var db: MovieDataBase
+    private val TAG = "Movies Fragment"
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +46,9 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        val component = DaggerMainComponent.create().inject(this)
+       // val component = DaggerMainComponent.create().inject(this)
+        DaggerMainComponent.builder().appModule(AppModule(requireContext())).build().inject(this)
+
         getData()
 
     }
@@ -58,45 +61,17 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
             adapter = viewAdapter
         }
     }
+
+    //A function to create the view Model as observe its results
     private fun getData() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getMovies()
-        viewModel.response.observe(viewLifecycleOwner, Observer {
-            viewAdapter.setData(it)
-        })
-    }
-/*
-    private fun getData() {
-        viewModel = ViewModelProvider(this, viewModelFactory).get(MainViewModel::class.java)
-        viewModel.getMovies()
-        viewModel.movies.observe(viewLifecycleOwner, Observer { response ->
-            when (response) {
-                is Resource.Success -> {
-                    hideProgressBar()
-                    response.response.let {
-                        if (it != null) {
-                            viewAdapter.setData(it.results.map {
-                                Movie(
-                                    name = it.originalTitle.toString(),
-                                    id = it.id,
-                                    overview = it.overview.toString(),
-                                    voteAvg = it.voteAverage,
-                                    image = it.posterPath
-                                )
-                            })
-                        }
-                    }
-                }
-                is Resource.Error -> {
-                    response.message?.let {
-                        Log.e(TAG,"An error occurred: $it")
-                    }
-                }
-                is Resource.Loading -> showProgressBar()
-            }
+        viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
+        //viewModel.getMovies()
+        viewModel.moviesResponse.observe(viewLifecycleOwner, Observer { response->
+            //observe is loading
+            viewAdapter.setData(response)
 
         })
-    }*/
+    }
 
     override fun onItemClick(movie: Movie) {
         //Forward a movie parcelable object using safeArgs(compile time safe)
@@ -144,3 +119,4 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
         progress_bar.visibility = View.VISIBLE
     }
 }
+

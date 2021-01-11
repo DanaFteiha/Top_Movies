@@ -1,9 +1,10 @@
-package com.example.topmovies.dependencyInjection
+package com.example.topmovies.di
 
 import com.example.topmovies.api.Api
 import dagger.Module
-
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -18,8 +19,12 @@ class ApiModule {
     @Provides
     fun provideRetrofitService(): Api {
 
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
         val retrofit = Retrofit.Builder()
-            .baseUrl(Api.BASE_URL)
+            .baseUrl(Api.BASE_URL).client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

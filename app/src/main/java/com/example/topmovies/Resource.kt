@@ -1,7 +1,7 @@
 package com.example.topmovies
 
 //To differentiate between successful and error responses
-//Also handles progress bar\
+//Also handles progress bar
 //Sealed class to limit the classes that are allowed to inherit from recourse
 sealed class Resource<T>(
     val response: T? = null,

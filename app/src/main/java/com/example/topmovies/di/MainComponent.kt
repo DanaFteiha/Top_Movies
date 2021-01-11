@@ -1,17 +1,16 @@
-package com.example.topmovies.dependencyInjection
+package com.example.topmovies.di
 
-import com.example.topmovies.Room.AppModule
-import com.example.topmovies.Room.DataBaseModule
-import com.example.topmovies.Room.MovieDataBase
+import android.content.Context
 import com.example.topmovies.ui.Fragments.MoviesFragment
 import dagger.Component
 import javax.inject.Singleton
 
-//The Injector
+//The Injector which tells dagger which classes to inject
 @Singleton
-@Component (modules = [MainModule::class , ApiModule::class])
+@Component(modules = [MainModule::class, ApiModule::class, AppModule::class, DatabaseModule::class])
 interface MainComponent {
     // This tells Dagger that MainActivity requests injection so the graph needs to
     // satisfy all the dependencies of the fields that MainActivity is requesting.
-    fun inject (activity: MoviesFragment)
+    fun inject(activity: MoviesFragment)
+
 }

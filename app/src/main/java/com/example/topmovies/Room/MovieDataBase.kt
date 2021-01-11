@@ -16,12 +16,11 @@ import javax.inject.Singleton
 
 
 @Database(entities = [Movie::class], version = 1)
-@TypeConverters(Converters::class)
 abstract class MovieDataBase : RoomDatabase() {
 
     //variable to access Dao methods
     abstract fun getMovieDao(): MovieDao
-
+/*
     //Singleton Instance
     companion object {
         @Volatile
@@ -45,5 +44,5 @@ abstract class MovieDataBase : RoomDatabase() {
                 "movies"
             ).build()
     }
-
+*/
 }
