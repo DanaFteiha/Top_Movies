@@ -8,21 +8,20 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.topmovies.R
 import com.example.topmovies.data.Movie
 import com.example.topmovies.databinding.FragmentMoviesBinding
 import com.example.topmovies.di.AppModule
 import com.example.topmovies.di.DaggerMainComponent
 import com.example.topmovies.ui.data.MovieAdapter
-
 import javax.inject.Inject
+import javax.inject.Named
 
 
 class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemClickListener {
     @Inject
+    @field:Named("movie")
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: MovieAdapter
     private lateinit var viewModel: MovieViewModel
     private var _binding: FragmentMoviesBinding? = null
@@ -40,8 +39,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMoviesBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -80,9 +78,11 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
     }
 
     override fun onItemClick(movie: Movie) {
-        //Forward a movie parcelable object using safeArgs(compile time safe)
-        val actionClick = MoviesFragmentDirections.actionMoviesFragmentToDetailsFragment(movie)
-        findNavController().navigate(actionClick)
+        val actionClick =
+            movie.id?.let { MoviesFragmentDirections.actionMoviesFragmentToDetailsFragment(movieID = movie.id) }
+        if (actionClick != null) {
+            findNavController().navigate(actionClick)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

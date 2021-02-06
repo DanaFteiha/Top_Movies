@@ -1,5 +1,6 @@
 package com.example.topmovies.di
 
+import com.example.topmovies.ui.details.DetailsFragment
 import com.example.topmovies.ui.movies.MoviesFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -11,4 +12,5 @@ interface MainComponent {
     // This tells Dagger that MoviesFragment requests injection so the graph needs to
     // satisfy all the dependencies of the fields it is requesting.
     fun inject(activity: MoviesFragment)
+    fun inject1(activity: DetailsFragment)
 }

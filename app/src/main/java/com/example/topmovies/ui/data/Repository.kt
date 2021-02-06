@@ -41,7 +41,7 @@ class Repository @Inject constructor(
     private suspend fun insertMovies(movie: List<Movie>) =
         database.getMovieDao().insertMovies(movie)
 
-    private suspend fun getMoviesFromDatabase() = database.getMovieDao().getAllMovies()
+    suspend fun getMoviesFromDatabase() = database.getMovieDao().getAllMovies()
 
     private fun isNetworkConnected(): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
