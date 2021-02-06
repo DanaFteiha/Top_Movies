@@ -15,6 +15,8 @@ import com.example.topmovies.ui.Fragments.MoviesFragment
 import java.util.*
 import kotlin.collections.ArrayList
 
+//try creating a branch
+
 class MovieAdapter(private val listener: OnItemClickListener, activity: MoviesFragment) :
     RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
     private var moviesList = ArrayList<Movie>()
