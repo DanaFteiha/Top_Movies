@@ -1,9 +1,10 @@
-package com.example.topmovies.data
+package com.example.topmovies.ui.data
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.example.topmovies.Room.MovieDataBase
 import com.example.topmovies.api.Api
+import com.example.topmovies.data.Movie
+import com.example.topmovies.database.MovieDataBase
 import javax.inject.Inject
 
 class Repository @Inject constructor(

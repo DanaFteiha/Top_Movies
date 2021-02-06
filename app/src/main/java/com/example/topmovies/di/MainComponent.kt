@@ -1,6 +1,6 @@
 package com.example.topmovies.di
 
-import com.example.topmovies.ui.Fragments.MoviesFragment
+import com.example.topmovies.ui.movies.MoviesFragment
 import dagger.Component
 import javax.inject.Singleton
 

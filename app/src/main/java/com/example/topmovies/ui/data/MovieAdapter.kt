@@ -1,4 +1,4 @@
-package com.example.topmovies.ui
+package com.example.topmovies.ui.data
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import com.example.topmovies.R
 import com.example.topmovies.api.Api
 import com.example.topmovies.data.Movie
 import com.example.topmovies.databinding.MovieItemBinding
-import com.example.topmovies.ui.Fragments.MoviesFragment
+import com.example.topmovies.ui.movies.MoviesFragment
 import java.util.*
 import kotlin.collections.ArrayList
 

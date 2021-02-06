@@ -1,4 +1,4 @@
-package com.example.topmovies.ui
+package com.example.topmovies.ui.movies
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

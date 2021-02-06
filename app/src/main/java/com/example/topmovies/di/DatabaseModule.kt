@@ -2,7 +2,7 @@ package com.example.topmovies.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.topmovies.Room.MovieDataBase
+import com.example.topmovies.database.MovieDataBase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

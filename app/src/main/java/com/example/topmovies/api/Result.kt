@@ -1,7 +1,8 @@
-package com.example.topmovies.data
+package com.example.topmovies.api
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+
 //Data class the stores the JSON string as Kotlin objects
 data class Result(
     @SerializedName("id")

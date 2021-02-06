@@ -1,4 +1,4 @@
-package com.example.topmovies.ui.Fragments
+package com.example.topmovies.ui.details
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.example.topmovies.Room
+package com.example.topmovies.database
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -1,4 +1,4 @@
-package com.example.topmovies.ui.Fragments
+package com.example.topmovies.ui.movies
 
 import android.os.Bundle
 import android.view.*
@@ -14,8 +14,8 @@ import com.example.topmovies.data.Movie
 import com.example.topmovies.databinding.FragmentMoviesBinding
 import com.example.topmovies.di.AppModule
 import com.example.topmovies.di.DaggerMainComponent
-import com.example.topmovies.ui.MovieAdapter
-import com.example.topmovies.ui.MovieViewModel
+import com.example.topmovies.ui.data.MovieAdapter
+
 import javax.inject.Inject
 
 
@@ -33,6 +33,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
         // Here notify the fragment that it should participate in options menu handling.
         setHasOptionsMenu(true)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,10 +43,12 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
         val view = binding.root
         return view
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
         DaggerMainComponent.builder().appModule(AppModule(requireContext())).build().inject(this)
@@ -95,6 +98,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
                 }
+
                 override fun onQueryTextChange(newText: String?): Boolean {
                     viewAdapter.search(newText.orEmpty())
                     return true

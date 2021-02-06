@@ -1,10 +1,10 @@
-package com.example.topmovies.ui
+package com.example.topmovies.ui.movies
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.topmovies.data.Movie
-import com.example.topmovies.data.Repository
+import com.example.topmovies.ui.data.Repository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
