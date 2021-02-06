@@ -1,10 +1,7 @@
 package com.example.topmovies.ui.Fragments
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.annotation.Nullable
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -13,46 +10,51 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.topmovies.R
-import com.example.topmovies.Room.MovieDataBase
-import com.example.topmovies.api.Api
 import com.example.topmovies.data.Movie
+import com.example.topmovies.databinding.FragmentMoviesBinding
 import com.example.topmovies.di.AppModule
 import com.example.topmovies.di.DaggerMainComponent
 import com.example.topmovies.ui.MovieAdapter
 import com.example.topmovies.ui.MovieViewModel
-import kotlinx.android.synthetic.main.fragment_movies.*
 import javax.inject.Inject
 
 
 class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemClickListener {
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: MovieAdapter
     private lateinit var viewModel: MovieViewModel
-    private lateinit var moviesApi: Api
-    private lateinit var db: MovieDataBase
-    private val TAG = "Movies Fragment"
+    private var _binding: FragmentMoviesBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Here notify the fragment that it should participate in options menu handling.
         setHasOptionsMenu(true)
     }
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-        // val component = DaggerMainComponent.create().inject(this)
         DaggerMainComponent.builder().appModule(AppModule(requireContext())).build().inject(this)
-
         getData()
-
     }
 
     private fun setupRecyclerView() {
         viewAdapter = MovieAdapter(this, this)
-        recyclerView = movieRecyclerView.apply {
+        binding.movieRecyclerView.apply {
             setHasFixedSize(true)
             // specify an viewAdapter
             adapter = viewAdapter
@@ -93,7 +95,6 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return true
                 }
-
                 override fun onQueryTextChange(newText: String?): Boolean {
                     viewAdapter.search(newText.orEmpty())
                     return true
@@ -103,21 +104,12 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
         return super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
-    //The reference is null when the view is destroyed
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     private fun hideProgressBar() {
-        progress_bar.visibility = View.INVISIBLE
+        binding.progressBar.visibility = View.INVISIBLE
     }
 
     private fun showProgressBar() {
-        progress_bar.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
     }
 }
 
