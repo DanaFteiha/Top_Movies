@@ -1,6 +1,5 @@
 package com.example.topmovies.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.topmovies.Room.MovieDataBase
@@ -10,7 +9,6 @@ import javax.inject.Singleton
 
 @Module
 class DatabaseModule {
-
     @Singleton
     @Provides
     fun provideDatabase(mContext: Context): MovieDataBase {
@@ -20,5 +18,4 @@ class DatabaseModule {
             "movies"
         ).build()
     }
-
 }

@@ -1,6 +1,5 @@
 package com.example.topmovies.di
 
-import android.content.Context
 import com.example.topmovies.ui.Fragments.MoviesFragment
 import dagger.Component
 import javax.inject.Singleton
@@ -9,8 +8,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [MainModule::class, ApiModule::class, AppModule::class, DatabaseModule::class])
 interface MainComponent {
-    // This tells Dagger that MainActivity requests injection so the graph needs to
-    // satisfy all the dependencies of the fields that MainActivity is requesting.
+    // This tells Dagger that MoviesFragment requests injection so the graph needs to
+    // satisfy all the dependencies of the fields it is requesting.
     fun inject(activity: MoviesFragment)
-
 }

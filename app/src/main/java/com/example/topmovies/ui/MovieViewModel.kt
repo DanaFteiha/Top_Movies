@@ -15,7 +15,6 @@ class MovieViewModel @Inject constructor(private val repository: Repository) : V
     //MutableLiveData object that stores the most recent response
     val moviesResponse: MutableLiveData<List<Movie>> = MutableLiveData()
     //add isloading
-    private var pageNum = 1
 
     //calling the getMovies function to make the network request
     init {
@@ -26,8 +25,7 @@ class MovieViewModel @Inject constructor(private val repository: Repository) : V
     //The coroutine stays alive as long as the view model is alive
     //Before the network call was made a loading state was set to the mutable live data object
     private fun getMovies() = viewModelScope.launch {
-
-        moviesResponse.value = repository.getMovies(pageNum)
+        moviesResponse.value = repository.getMovies()
     }
 
     //A function to handle the response got from network
