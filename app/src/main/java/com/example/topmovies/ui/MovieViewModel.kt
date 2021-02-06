@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.topmovies.Resource
 import com.example.topmovies.api.ApiResults
-import com.example.topmovies.data.Repository
 import com.example.topmovies.data.Movie
+import com.example.topmovies.data.Repository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     //MutableLiveData object that stores the most recent response
     val moviesResponse: MutableLiveData<List<Movie>> = MutableLiveData()
-    //add isloading
+    var isLoading: MutableLiveData<Boolean> = MutableLiveData()
 
     //calling the getMovies function to make the network request
     init {
@@ -25,7 +25,9 @@ class MovieViewModel @Inject constructor(private val repository: Repository) : V
     //The coroutine stays alive as long as the view model is alive
     //Before the network call was made a loading state was set to the mutable live data object
     private fun getMovies() = viewModelScope.launch {
+        isLoading.value = true
         moviesResponse.value = repository.getMovies()
+        isLoading.value = false
     }
 
     //A function to handle the response got from network

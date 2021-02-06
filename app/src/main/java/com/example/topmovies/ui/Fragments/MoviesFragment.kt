@@ -1,7 +1,6 @@
 package com.example.topmovies.ui.Fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,15 +13,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.topmovies.R
-import com.example.topmovies.Resource
 import com.example.topmovies.Room.MovieDataBase
 import com.example.topmovies.api.Api
 import com.example.topmovies.data.Movie
 import com.example.topmovies.di.AppModule
 import com.example.topmovies.di.DaggerMainComponent
-import com.example.topmovies.di.MainModule
-import com.example.topmovies.ui.MovieViewModel
 import com.example.topmovies.ui.MovieAdapter
+import com.example.topmovies.ui.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
 import javax.inject.Inject
 
@@ -46,7 +43,7 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupRecyclerView()
-       // val component = DaggerMainComponent.create().inject(this)
+        // val component = DaggerMainComponent.create().inject(this)
         DaggerMainComponent.builder().appModule(AppModule(requireContext())).build().inject(this)
 
         getData()
@@ -65,8 +62,12 @@ class MoviesFragment : Fragment(R.layout.fragment_movies), MovieAdapter.OnItemCl
     //A function to create the view Model as observe its results
     private fun getData() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(MovieViewModel::class.java)
-        //viewModel.getMovies()
-        viewModel.moviesResponse.observe(viewLifecycleOwner, Observer { response->
+        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                showProgressBar()
+            } else hideProgressBar()
+        })
+        viewModel.moviesResponse.observe(viewLifecycleOwner, Observer { response ->
             //observe is loading
             viewAdapter.setData(response)
 
